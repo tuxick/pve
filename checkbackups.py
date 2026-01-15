@@ -1,8 +1,7 @@
 #!/bin/env python3
+# Check if some vm backups to to multiple storages
 
 import json,subprocess,string
-# cmd = 'pvesh get /cluster/backup --noborder 1 --noheader 1'
-# cmd = 'pvesh get /cluster/backup --noborder 1 --noheader 1 --output-format json'
 cmd = 'pvesh get /cluster/backup --output-format json'
 IDS = subprocess.getoutput(cmd)
 backups = json.loads(IDS)
