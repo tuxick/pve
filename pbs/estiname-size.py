@@ -13,8 +13,10 @@ import json
 format_json = False
 storepath = "/mnt/datastore"
 all = False
+datastore_path = "/mnt/datastore"
 
-def scan_vmid(datastore, vmid):
+
+def scan_vmid(datastore, vmid, all):
     if not vmid:
         raise Exception("vmid is blank")
 
@@ -80,7 +82,7 @@ def scan_vmid(datastore, vmid):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Estimate space used by vm images.")
     parser.add_argument('datastore', metavar='datastore', type=str,
-                    help="datastore to look in")
+                    help="datastore to look in, also takes full path to alternative location")
     parser.add_argument('vmids', metavar='vmids', type=str, nargs='*',
                     help='vmid(s) to scan for backups')
     parser.add_argument('-j', '--json', action='store_const',
@@ -97,9 +99,17 @@ if __name__ == "__main__":
     format_json = args.json
     all = args.all
 
+<<<<<<< HEAD
     if len(args.path) > 0:
         storepath = args.path
     datastore_path = "/%s/%s/vm/" % (storepath,args.datastore)
+=======
+    if os.path.isabs(args.datastore):
+        datastore_path = args.datastore
+    else:
+        datastore_path = os.path.join(datastore_path, args.datastore)
+    datastore_path = os.path.join(datastore_path,"vm")
+>>>>>>> 13b4cf83d2ab82a1e109817beef689a2415578e6
     if len(args.vmids) == 0:
         vmids_list = []
         for f in sorted(os.listdir(datastore_path)):
@@ -113,7 +123,11 @@ if __name__ == "__main__":
     for vmid in vmids_list:
         if not format_json:
             print("vmid = %s" % vmid)
+<<<<<<< HEAD
         snapshots = scan_vmid(datastore_path, vmid)
+=======
+        snapshots = scan_vmid(datastore_path, vmid, all)
+>>>>>>> 13b4cf83d2ab82a1e109817beef689a2415578e6
 
         if format_json:
             vmids += [{"vmid": vmid, "snapshots": snapshots}]
