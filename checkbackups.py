@@ -2,7 +2,7 @@
 # Check if some vm backups to to multiple storages
 
 import json
-import subprocessi
+import subprocess
 import string
 
 cmd = 'pvesh get /cluster/backup --output-format json'
